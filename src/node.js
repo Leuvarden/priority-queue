@@ -39,7 +39,18 @@ class Node {
     }
 	}
 
-	remove() { //calls child.parent.removeChild with child as arg
+	remove() {
+
+		// √ does nothing if node does not have parent
+		// 23) calls child.parent.removeChild with child as arg
+
+
+    if (!this.parent) {
+      return null;
+    } else {
+    removeChild(this.parent.left);
+		return this;
+  }
 
 }
 
@@ -54,8 +65,23 @@ class Node {
 // 27) updates children of node and parent node
 // 28) maintains correct state of parent.parent.left and parent.parent.right
 
+		if (!this.parent) {
+			return null;
+		}
+		else {
+			 var thpp  = this.parent.parent,
+			 		 thp = this.parent;
+
+			this.parent.parent = this;
+			this.parent.child = this.parent;
+			this.parent = thpp;
+			this.left = thp;
+			return this;
+		}
 
 	}
+
+
 }
 
 module.exports = Node;

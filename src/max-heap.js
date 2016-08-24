@@ -49,6 +49,8 @@ class MaxHeap {
         } else {
 					var current = this.root;
 
+
+
 				}
 	}
 
