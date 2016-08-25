@@ -32,6 +32,14 @@ Node.prototype.removeChild = function(node) {
     }
 }
 
+// #swapWithParent
+//     √ does nothing if node does not have parent
+//     25) updates parent.parent
+//     26) updates child.parent
+//     27) updates parent.child.parent
+//     28) updates children of node and parent node
+//     29) maintains correct state of parent.parent.left and parent.parent.right
+
 Node.prototype.swapWithParent = function() {
 
     if (!this.parent) {
@@ -40,10 +48,49 @@ Node.prototype.swapWithParent = function() {
         var thpp = this.parent.parent,
             thp = this.parent;
 
+            //если я правый потомок, то сменить родителя у левого потомка
+            if (this.parent.right === this) {
+              this.parent.left.parent = this;
+            }
+            //если я левый потомок и у меня есть брат, то его родитель теперь я
+            else if (this.parent.left===this && this.parent.right) {
+              this.parent.right.parent = this;
+            }
+
+
+            // if (this.left) {
+            //   this.left.parent=thpp;
+            // }
+            //
+            // if (this.right) {
+            //   this.right.parent=thpp;
+            // }
+
+            if (this.parent.left === this && this.parent.right) {
+              this.right = this.parent.right;
+            }
+            else if (this.parent.right === this) {
+              this.left = this.parent.right;
+            }
+
+
+        //я теперь родитель родителя
         this.parent.parent = this;
-        this.parent.child = this.parent;
+
+        //мой родитель теперь родитель родителя
         this.parent = thpp;
-        this.left = thp;
+        //мой ребенок теперь мой родитель
+        // this.left = thp;
+
+        //если у меня есть потомки, то их родитель уже не я
+
+        if (this.parent.left === this && this.parent.right) {
+          this.right = this.parent.right;
+        }
+        else if (this.parent.right === this) {
+          this.left = this.parent.right;
+        }
+
 
         return this;
     }

@@ -72,10 +72,42 @@ class Node {
 			 var thpp  = this.parent.parent,
 			 		 thp = this.parent;
 
-			this.parent.parent = this;
-			this.parent.child = this.parent;
-			this.parent = thpp;
-			this.left = thp;
+					 //если я правый потомок, то сменить родителя у левого потомка
+					 if (this.parent.right === this) {
+						 this.parent.left.parent = this;
+					 }
+					 //если я левый потомок и у меня есть брат, то его родитель теперь я
+					 else if (this.parent.left===this && this.parent.right) {
+						 this.parent.right.parent = this;
+					 }
+
+
+					 if (this.left) {
+						 this.left.parent=thp;
+					 }
+
+					 if (this.right) {
+						 this.right.parent=thp;
+					 }
+
+					 if (this.parent.left === this && this.parent.right) {
+						 this.right = this.parent.right;
+					 }
+					 else if (this.parent.right === this) {
+						 this.left = this.parent.right;
+					 }
+
+
+			 //я теперь родитель родителя
+			 this.parent.parent = this;
+
+			 //мой родитель теперь родитель родителя
+			 this.parent = thpp;
+			 //мой ребенок теперь мой родитель
+			 // this.left = thp;
+
+			 //если у меня есть потомки, то их родитель уже не я
+
 			return this;
 		}
 
