@@ -32,64 +32,42 @@ Node.prototype.removeChild = function(node) {
     }
 }
 
-// #swapWithParent
-//     √ does nothing if node does not have parent
-//     25) updates parent.parent
-//     26) updates child.parent
-//     27) updates parent.child.parent
-//     28) updates children of node and parent node
-//     29) maintains correct state of parent.parent.left and parent.parent.right
-
 Node.prototype.swapWithParent = function() {
 
     if (!this.parent) {
         return null;
     } else {
-        var thpp = this.parent.parent,
-            thp = this.parent;
+      var myParent = this.parent;
+      var myParentLeft = this.parent.left;
+      var myParentRight = this.parent.right;
+      var myLeft = this.left;
+      var myRight = this.right;
 
-            //если я правый потомок, то сменить родителя у левого потомка
-            if (this.parent.right === this) {
-              this.parent.left.parent = this;
-            }
-            //если я левый потомок и у меня есть брат, то его родитель теперь я
-            else if (this.parent.left===this && this.parent.right) {
-              this.parent.right.parent = this;
-            }
-
-
-            // if (this.left) {
-            //   this.left.parent=thpp;
-            // }
-            //
-            // if (this.right) {
-            //   this.right.parent=thpp;
-            // }
-
-            if (this.parent.left === this && this.parent.right) {
-              this.right = this.parent.right;
-            }
-            else if (this.parent.right === this) {
-              this.left = this.parent.right;
-            }
-
-
-        //я теперь родитель родителя
-        this.parent.parent = this;
-
-        //мой родитель теперь родитель родителя
-        this.parent = thpp;
-        //мой ребенок теперь мой родитель
-        // this.left = thp;
-
-        //если у меня есть потомки, то их родитель уже не я
-
-        if (this.parent.left === this && this.parent.right) {
-          this.right = this.parent.right;
+      //set this level above of this.parent to left or right child of parent's parent
+      this.parent=myParent.parent;
+      if (!(this.parent===null)){
+        if (myParent.parent.left===myParent){			//is myParent left child of his parent
+          myParent.parent.left=this;					//now I'm a left child of my parent
+        } else if (myParent.parent.right===myParent){	//is myParent right child of his parent
+          myParent.parent.right=this;					//now I'm a right child of my parent
         }
-        else if (this.parent.right === this) {
-          this.left = this.parent.right;
-        }
+      }
+      //move level down this.parent - to this
+      if (this===myParentLeft){				//I'm a left child
+       if (!(myParent.right.parent===null)){
+         myParent.right.parent=this;
+       }
+        this.left=myParent;					//now my parent is my left child
+        this.right=myParent.right;			//and my right is my parent's right
+      } else if (this===myParentRight){ 		//I'm a right child
+        myParent.left.parent=this;
+        this.right=myParent;				//now my parent is my right child
+        this.left=myParent.left				////and my left is my parent's left
+      }
+      //set up my parent
+
+      myParent.left=myLeft;
+      myParent.right=myRight;
 
 
         return this;
