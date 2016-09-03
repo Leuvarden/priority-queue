@@ -45,7 +45,7 @@ Node.prototype.swapWithParent = function() {
 
       //set this level above of this.parent to left or right child of parent's parent
       this.parent=myParent.parent;
-      if (!(this.parent===null)){
+      if (this.parent){
         if (myParent.parent.left===myParent){			//is myParent left child of his parent
           myParent.parent.left=this;					//now I'm a left child of my parent
         } else if (myParent.parent.right===myParent){	//is myParent right child of his parent
@@ -54,7 +54,7 @@ Node.prototype.swapWithParent = function() {
       }
       //move level down this.parent - to this
       if (this===myParentLeft){				//I'm a left child
-       if (!(myParent.right.parent===null)){
+       if (myParent.right) {
          myParent.right.parent=this;
        }
         this.left=myParent;					//now my parent is my left child
@@ -65,11 +65,9 @@ Node.prototype.swapWithParent = function() {
         this.left=myParent.left				////and my left is my parent's left
       }
       //set up my parent
-
       myParent.left=myLeft;
       myParent.right=myRight;
-
-
-        return this;
+      myParent.parent=this;
+      return this;
     }
 }
