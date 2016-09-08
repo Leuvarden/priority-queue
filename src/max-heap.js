@@ -38,19 +38,21 @@ class MaxHeap {
 	}
 
 	insertNode(node) {
-
-		// 5) assings passed node to this.root if heap is empty
-		// 6) inserts nodes to correct places
-		// 7) maintains this.parentNodes in correct state
-
         if (this.root === null)
         {
             this.root = node;
-        } else {
-					var current = this.root;
-
-
-
+						this.parentNodes[0] = node;
+        }
+				else {
+					var l = this.parentNodes.length;
+					this.parentNodes[l]=node;
+					node.parent = this.parentNodes[Math.floor(l/2)];
+					if ((l/2)%2===0) {
+						node.parent.left = node;
+					} else {
+						node.parent.right = node;
+					}
+					return this;
 				}
 	}
 

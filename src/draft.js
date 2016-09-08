@@ -7,6 +7,8 @@ function Node(data, priority) {
     this.right = null;
 }
 
+
+
 Node.prototype.appendChild = function(node) {
     if (this.left && this.right) {
         return null;
@@ -68,6 +70,30 @@ Node.prototype.swapWithParent = function() {
       myParent.left=myLeft;
       myParent.right=myRight;
       myParent.parent=this;
+      return this;
+    }
+}
+
+function MaxHeap() {
+  		this.root = null;
+  		this.parentNodes = [];
+}
+
+MaxHeap.prototype.insertNode = function(node) {
+  if (this.root === null) {
+      this.root = node;
+      this.parentNodes[0] = node;
+      return this;
+  }
+    else {
+      var l = this.parentNodes.length;  
+      node.parent = this.parentNodes[Math.floor(l/2)];
+      this.parentNodes[l]=node;
+      if ((this.parentNodes.length)%2!==0) {
+        node.parent.left = node;
+      } else {
+        node.parent.right = node;
+      }
       return this;
     }
 }

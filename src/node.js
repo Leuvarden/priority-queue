@@ -41,30 +41,33 @@ class Node {
     if (!this.parent) {
       return null;
     } else {
-    Node.prototype.removeChild(this.parent.left===this? this.parent.left  : this.parent.right);
+			var me=this,
+			myParent=this.parent;
+			myParent.RemoveChild(me);
+
+
 		return this;
   }
 
 }
-
-
 
 	swapWithParent() {
 		if (!this.parent) {
 			return null;
 		}
 		else {
-			var myParent = this.parent;
-			 var myParentLeft = this.parent.left;
-			 var myParentRight = this.parent.right;
-			 var myLeft = this.left;
-			 var myRight = this.right;
+			var myParent = this.parent,
+			    myParentLeft = this.parent.left,
+			    myParentRight = this.parent.right,
+			    myLeft = this.left,
+			    myRight = this.right;
 			 //set this level above of this.parent to left or right child of parent's parent
 			 this.parent=myParent.parent;
        if (this.parent){
          if (myParent.parent.left===myParent){			//is myParent left child of his parent
            myParent.parent.left=this;					//now I'm a left child of my parent
-         } else if (myParent.parent.right===myParent){	//is myParent right child of his parent
+         }
+				 else if (myParent.parent.right===myParent){	//is myParent right child of his parent
            myParent.parent.right=this;					//now I'm a right child of my parent
          }
        }
@@ -87,8 +90,6 @@ class Node {
 	   		return this;
 		}
 	}
-
-
 }
 
 module.exports = Node;
