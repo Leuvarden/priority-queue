@@ -45,13 +45,14 @@ class MaxHeap {
         }
 				else {
 					var l = this.parentNodes.length;
-					this.parentNodes[l]=node;
-					node.parent = this.parentNodes[Math.floor(l/2)];
-					if ((l/2)%2===0) {
-						node.parent.left = node;
-					} else {
-						node.parent.right = node;
-					}
+      node.parent = this.parentNodes[Math.floor((l-1)/2)];
+      this.parentNodes[l]=node;
+      if ((this.parentNodes.indexOf(node))%2===1) {
+        node.parent.left = node;
+      } else {
+        node.parent.right = node;
+      }
+
 					return this;
 				}
 	}
