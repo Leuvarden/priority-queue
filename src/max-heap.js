@@ -1,69 +1,64 @@
 const Node = require('./node');
 
 class MaxHeap {
-	constructor() {
-		this.root = null;
-		this.parentNodes = [];
-	}
+    constructor() {
+        this.root = null;
+        this.parentNodes = [];
+    }
 
-	push(data, priority) {
+    push(data, priority) {
 
-	}
+    }
 
-	pop() {
+    pop() {
 
-	}
+    }
 
-	detachRoot() {
+    detachRoot() {
 
-	}
+    }
 
-	restoreRootFromLastInsertedNode(detached) {
+    restoreRootFromLastInsertedNode(detached) {
 
-	}
+    }
 
-	size() {
+    size() {
 
-	}
+    }
 
-	isEmpty() {
-		if (this.root === null) {
-			return true;
-		}
-
-	}
-
-	clear() {
-
-	}
-
-	insertNode(node) {
-        if (this.root === null)
-        {
-            this.root = node;
-						this.parentNodes[0] = node;
+    isEmpty() {
+        if (this.root === null) {
+            return true;
         }
-				else {
-					var l = this.parentNodes.length;
-      node.parent = this.parentNodes[Math.floor((l-1)/2)];
-      this.parentNodes[l]=node;
-      if ((this.parentNodes.indexOf(node))%2===1) {
-        node.parent.left = node;
-      } else {
-        node.parent.right = node;
-      }
 
-					return this;
-				}
-	}
+    }
 
-	shiftNodeUp(node) {
+    clear() {
 
-	}
+    }
 
-	shiftNodeDown(node) {
+    insertNode(node) {
+        if (this.root === null) {
+            this.root = node;
+            this.parentNodes[0] = node;
+        } else {
+          this.parentNodes.push(node);
+          node.parent=this.parentNodes[0];
+          (this.parentNodes[0].left===null) ? node.parent.left=node :  node.parent.right=node;
+          if (this.parentNodes[0].right) {
+            this.parentNodes.splice(0,1);
+          }
+        }
+        return this;
+    }
 
-	}
+    shiftNodeUp(node) {
+
+    }
+
+    shiftNodeDown(node) {
+
+    }
 }
 
 module.exports = MaxHeap;
