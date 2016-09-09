@@ -74,14 +74,23 @@ MaxHeap.prototype.insertNode = function(node) {
         this.root = node;
         this.parentNodes[0] = node;
     } else {
-        var l = this.parentNodes.length;
-        node.parent = this.parentNodes[Math.floor((l - 1) / 2)];
-        this.parentNodes[l] = node;
-        if ((this.parentNodes.indexOf(node)) % 2 === 1) {
-            node.parent.left = node;
-        } else {
-            node.parent.right = node;
+        this.parentNodes.push(node);
+        node.parent = this.parentNodes[0];
+        (this.parentNodes[0].left === null) ? node.parent.left = node: node.parent.right = node;
+        if (this.parentNodes[0].right !== null) {
+            this.parentNodes.splice(0, 1);
         }
-        return this;
+    }
+    return this;
+}
+MaxHeap.prototype.size = function() {
+    if (this.root === null) {
+        return 0;
+    } else if (this.root.left === null) {
+        return 1;
+    } else {
+        var len = this.parentNodes.length,
+            size = len * 2;
+        return size = (this.parentNodes[len - 1].parent.right) ? size - 1 : size - 2;
     }
 }
